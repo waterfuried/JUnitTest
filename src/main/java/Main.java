@@ -9,5 +9,38 @@
      Если есть чтото кроме 1 или 4 то вернет false;
 */
 class Main {
+	static int[] getAfterLastNumber(int[] arr, int number) throws RuntimeException {
+		if (arr != null && arr.length > 0) {
+			int i = arr.length-1;
+			while (i != 0 && arr[i] != number) i--;
+			if (arr[i] == number) {
+				int[] newArr = new int[arr.length - i - 1];
+				System.arraycopy(arr, i + 1, newArr, 0, newArr.length);
+				return newArr;
+			}
+		}
+		throw new RuntimeException();
+	}
+
+	static boolean containsValidNumbers(int[] arr, int[] validNumbers) {
+		if (arr != null && validNumbers != null && arr.length > 0 && validNumbers.length > 0) {
+			boolean[] hasValid = new boolean[validNumbers.length];
+			boolean valid;
+			for (int i : arr) {
+				valid = false;
+				for (int j = 0; j < validNumbers.length; j++)
+					if (i == validNumbers[j]) {
+						hasValid[j] = true;
+						valid = true;
+					}
+				if (!valid) return false;
+			}
+			valid = true;
+			for (boolean b : hasValid) valid &= b;
+			return valid;
+		}
+		return false;
+	}
+
 	public static void main(String[] args) {}
 }
